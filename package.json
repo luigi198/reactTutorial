@@ -1,0 +1,27 @@
+{
+  "name": "react-personal-demo",
+  "version": "1.0.0",
+  "description": "My personal demo for react",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luigi198/reactTutorial.git"
+  },
+  "author": "Luigi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/luigi198/reactTutorial/issues"
+  },
+  "homepage": "https://github.com/luigi198/reactTutorial#readme",
+  "dependencies": {
+    "gulp": "3.9.1"
+  },
+  "devDependencies": {
+    "gulp-concat": "^2.6.0",
+    "gulp-jshint": "^2.0.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^2.2.0",
+    "gulp-uglify": "^1.5.3",
+    "jshint": "^2.9.1"
+  }
+}
