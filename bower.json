@@ -1,0 +1,21 @@
+{
+  "name": "react-personal-demo",
+  "description": "My personal demo for react",
+  "main": "index.js",
+  "authors": [
+    "Luigi"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/luigi198/reactTutorial",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "react": "^0.14.7"
+  }
+}

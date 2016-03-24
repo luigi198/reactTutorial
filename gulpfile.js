@@ -7,6 +7,7 @@ var sass = require('gulp-sass');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var rename = require('gulp-rename');
+var mainBowerFiles = require('main-bower-files');
 
 // Lint Task
 gulp.task('lint', function() {
@@ -32,6 +33,16 @@ gulp.task('scripts', function() {
         .pipe(gulp.dest('dist/js'));
 });
 
+// Concatenate & Minify Bower components
+gulp.task('bower', function() {
+    return gulp.src(mainBowerFiles())
+        .pipe(concat('allBowers.js'))
+        .pipe(gulp.dest('dist'))
+        .pipe(rename('allBower.min.js'))
+        .pipe(uglify())
+        .pipe(gulp.dest('dist/js'));
+});
+
 // Watch Files For Changes
 gulp.task('watch', function() {
     gulp.watch('app/js/*.js', ['lint', 'scripts']);
@@ -39,4 +50,4 @@ gulp.task('watch', function() {
 });
 
 // Default Task
-gulp.task('default', ['lint', 'sass', 'scripts', 'watch']);
+gulp.task('default', ['lint', 'sass', 'scripts', 'bower', 'watch']);
