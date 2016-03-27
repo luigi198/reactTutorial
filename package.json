@@ -17,15 +17,18 @@
     "gulp": "3.9.1"
   },
   "devDependencies": {
-    "babel-cli": "^6.6.5",
     "bower": "^1.7.7",
-    "gulp-babel": "^6.1.2",
+    "browser-sync": "^2.9.6",
+    "gulp-autoprefixer": "^3.0.2",
+    "gulp-babel": "^5.2.1",
     "gulp-concat": "^2.6.0",
-    "gulp-jshint": "^2.0.0",
-    "gulp-rename": "^1.2.2",
-    "gulp-sass": "^2.2.0",
-    "gulp-uglify": "^1.5.3",
-    "jshint": "^2.9.1",
+    "gulp-eslint": "^1.0.0",
+    "gulp-filter": "^3.0.1",
+    "gulp-newer": "^1.1.0",
+    "gulp-notify": "^2.2.0",
+    "gulp-plumber": "^1.0.1",
+    "gulp-sass": "^2.0.4",
+    "gulp-sourcemaps": "^1.5.2",
     "main-bower-files": "^2.11.1"
   }
 }

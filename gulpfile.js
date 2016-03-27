@@ -1,70 +1,116 @@
-// Include gulp
-var gulp = require('gulp');
+var gulp         = require('gulp');
+var autoprefixer = require('gulp-autoprefixer');
+var babel        = require('gulp-babel');
+var browserSync  = require('browser-sync');
+var concat       = require('gulp-concat');
+var eslint       = require('gulp-eslint');
+var filter       = require('gulp-filter');
+var newer        = require('gulp-newer');
+var notify       = require('gulp-notify');
+var plumber      = require('gulp-plumber');
+var reload       = browserSync.reload;
+var sass         = require('gulp-sass');
+var sourcemaps   = require('gulp-sourcemaps');
 
-// Include Our Plugins
-var jshint = require('gulp-jshint');
-var sass = require('gulp-sass');
-var concat = require('gulp-concat');
-var uglify = require('gulp-uglify');
-var rename = require('gulp-rename');
-var mainBowerFiles = require('main-bower-files');
-var babel = require('gulp-babel');
+var onError = function(err) {
+  notify.onError({
+    title:    "Error",
+    message:  "<%= error %>",
+  })(err);
+  this.emit('end');
+};
 
-// Lint Task
-gulp.task('lint', function() {
-    return gulp.src('app/js/*.js')
-        .pipe(jshint())
-        .pipe(jshint.reporter('default'));
+var plumberOptions = {
+  errorHandler: onError,
+};
+
+var jsFiles = {
+  vendor: [
+
+  ],
+  source: [
+    'assets/js/src/Utility.js',
+    'assets/js/src/components/ComponentForm.jsx',
+    'assets/js/src/components/Component.jsx',
+  ]
+};
+
+// Lint JS/JSX files
+gulp.task('eslint', function() {
+  return gulp.src(jsFiles.source)
+    .pipe(eslint({
+      baseConfig: {
+        "ecmaFeatures": {
+           "jsx": true
+         }
+      }
+    }))
+    .pipe(eslint.format())
+    .pipe(eslint.failAfterError());
 });
 
-// Compile Our Sass
+// Concatenate jsFiles.vendor and jsFiles.source into one JS file.
+// Run copy-react and eslint before concatenating
+gulp.task('concat', ['eslint'], function() {
+  return gulp.src(jsFiles.vendor.concat(jsFiles.source))
+    .pipe(sourcemaps.init())
+    .pipe(babel({
+      only: [
+        'assets/js/src/components',
+      ],
+      compact: false
+    }))
+    .pipe(concat('app.js'))
+    .pipe(sourcemaps.write('./'))
+    .pipe(gulp.dest('assets/js'));
+});
+
+// Compile Sass to CSS
 gulp.task('sass', function() {
-    return gulp.src('app/scss/*.scss')
-        .pipe(sass())
-        .pipe(gulp.dest('dist/css'));
+  var autoprefixerOptions = {
+    browsers: ['last 2 versions'],
+  };
+
+  var filterOptions = '**/*.css';
+
+  var reloadOptions = {
+    stream: true,
+  };
+
+  var sassOptions = {
+    includePaths: [
+
+    ]
+  };
+
+  return gulp.src('assets/sass/**/*.scss')
+    .pipe(plumber(plumberOptions))
+    .pipe(sourcemaps.init())
+    .pipe(sass(sassOptions))
+    .pipe(autoprefixer(autoprefixerOptions))
+    .pipe(sourcemaps.write('./'))
+    .pipe(gulp.dest('assets/css'))
+    .pipe(filter(filterOptions))
+    .pipe(reload(reloadOptions));
 });
 
-// Concatenate all js
-gulp.task('scripts', function() {
-    return gulp.src('app/js/*.js')
-        .pipe(concat('allscripts.js'))
-        .pipe(gulp.dest('dist'));
-});
-
-// Concatenate all jsx and transform to js
-gulp.task('scriptsJsx', function() {
-    return gulp.src('app/views/*.jsx')
-        .pipe(babel())
-        .pipe(concat('alljsx.js'))
-        .pipe(gulp.dest('dist'));
-});
-
-gulp.task('uglify', function() {
-    return gulp.src('dist/js/*.js')
-        .pipe(concat('all.js'))
-        .pipe(babel())
-        .pipe(rename('all.min.js'))
-        .pipe(uglify())
-        .pipe(gulp.dest('dist/js'));
-});
-
-// Concatenate & Minify Bower components
-gulp.task('bower', function() {
-    return gulp.src(mainBowerFiles())
-        .pipe(concat('allBowers.js'))
-        .pipe(gulp.dest('dist'))
-        .pipe(rename('allBower.min.js'))
-        .pipe(uglify())
-        .pipe(gulp.dest('dist/js'));
-});
-
-// Watch Files For Changes
+// Watch JS/JSX and Sass files
 gulp.task('watch', function() {
-    gulp.watch('app/js/*.js', ['lint', 'scripts']);
-    gulp.watch('app/views/*.jsx', ['scriptsJsx']);
-    gulp.watch('dist', ['uglify']);
-    gulp.watch('app/scss/*.scss', ['sass']);
+  gulp.watch('assets/js/src/**/*.{js,jsx}', ['concat']);
+  gulp.watch('assets/sass/**/*.scss', ['sass']);
 });
 
-// Default Task
-gulp.task('default', ['lint', 'sass', 'scripts', 'bower', 'watch']);
+// BrowserSync
+gulp.task('browsersync', function() {
+  browserSync({
+    server: {
+      baseDir: './'
+    },
+    open: false,
+    online: false,
+    notify: false,
+  });
+});
+
+gulp.task('build', ['sass', 'concat']);
+gulp.task('default', ['build', 'browsersync', 'watch']);

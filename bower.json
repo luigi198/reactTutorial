@@ -17,5 +17,10 @@
   ],
   "dependencies": {
     "react": "^0.14.7"
+  },
+  "overrides": {
+    "react": {
+      "main": ["react.js", "react-dom.js"]
+    }
   }
 }
