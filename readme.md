@@ -1,4 +1,6 @@
-*Personal Demo about React
+-----------------------------------------------------------
+Personal Demo - React - Reflux - Webpack - React-bootstrap
+-----------------------------------------------------------
 
 TODO:
 - Swap Gulp for Webpack
