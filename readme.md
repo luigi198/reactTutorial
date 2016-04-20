@@ -14,6 +14,8 @@ https://www.codementor.io/reactjs/tutorial/beginner-guide-setup-reactjs-environm
 Commands:
 
 Build and watch changes in your app, build and refresh the page:
+```
 ./node_modules/.bin/webpack -d --watch
+```
 
 If you don't want to refresh page, use react-hot-loader.
