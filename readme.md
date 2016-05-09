@@ -26,18 +26,33 @@ http://redux.js.org/docs/introduction/index.html
 
 Project Architecture
 reactPersonalDemo
+
 |
+
 |-- src
+
 |    |-- client
+
 |    |     |-- app
+
 |    |     |   |-- actions
+
 |    |     |   |-- components
+
 |    |     |   |-- containers
+
 |    |     |   |-- reducers
+
 |    |     |   |-- index.jsx
+
 |    |     |-- public (bundle.js, libraries)
+
 |    |     |-- index.html
+
 |
+
 |-- package.json
+
 |-- readme.md
+
 |-- webpack.config.js
