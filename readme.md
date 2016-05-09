@@ -19,3 +19,25 @@ Build and watch changes in your app, build and refresh the page:
 ```
 
 If you don't want to refresh page, use react-hot-loader.
+
+Redux tutorial:
+http://teropa.info/blog/2015/09/10/full-stack-redux-tutorial.html
+http://redux.js.org/docs/introduction/index.html
+
+Project Architecture
+reactPersonalDemo
+|
+|-- src
+|    |-- client
+|    |     |-- app
+|    |     |   |-- actions
+|    |     |   |-- components
+|    |     |   |-- containers
+|    |     |   |-- reducers
+|    |     |   |-- index.jsx
+|    |     |-- public (bundle.js, libraries)
+|    |     |-- index.html
+|
+|-- package.json
+|-- readme.md
+|-- webpack.config.js

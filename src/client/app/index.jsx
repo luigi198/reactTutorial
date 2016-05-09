@@ -1,16 +1,16 @@
 import React from 'react';
 import {render} from 'react-dom';
-import AwesomeComponent from './awesomeComponent.jsx';
+import {Provider} from 'react-redux';
+import {createStore} from 'redux';
+import todoApp from './reducers';
+import App from './components/App';
+// import AwesomeComponent from './awesomeComponent.jsx';
 
-class App extends React.Component {
-    render () {
-        return (
-            <div>
-              <p> Hello React!</p>
-              <AwesomeComponent />
-            </div>
-          );
-    }
-}
+let store = createStore(todoApp);
 
-render(<App/>, document.getElementById('app'));
+render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('root')
+);
